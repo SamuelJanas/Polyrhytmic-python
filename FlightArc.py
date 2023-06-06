@@ -1,9 +1,8 @@
 import pygame
 import Color
 
-class FlightArc(pygame.sprite.Sprite):
+class FlightArc:
     def __init__(self, screen, color, x, y, radius, start_angle, end_angle):
-        super().__init__()
         self.screen = screen
         self.color = color
         self.x = x

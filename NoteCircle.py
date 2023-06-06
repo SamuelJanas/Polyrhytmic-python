@@ -3,18 +3,23 @@ import numpy as np
 
 # ...
 
-class NoteCircle(pygame.sprite.Sprite):
-    def __init__(self, screen, color, x, y, radius):
-        super().__init__()
+class NoteCircle:
+    def __init__(self, screen, color, x, y, center_x, radius, angle=0, angular_speed=0.02):
         self.screen = screen
-        self.color = color
+        self.center_x = center_x
+        self.center_y = y
         self.x = x
         self.y = y
+        self.starting_x = x
+        self.starting_y = y
         self.radius = radius
-        self.angular_velocity = 0.02  # Adjust the angular velocity as needed
-        self.angle = 0
+        self.color = color
+        self.angle = angle
+        self.angular_speed = angular_speed
+        self.move_radius = self.get_flight_arc_radius(center_x)
 
     def draw(self):
+        self.update()
         pygame.draw.circle(self.screen, self.color, (self.x, self.y), self.radius)
 
     def get_x(self):
@@ -26,13 +31,10 @@ class NoteCircle(pygame.sprite.Sprite):
     def get_flight_arc_radius(self, center_x):
         return abs(self.x - center_x)
 
-    def move(self, start_angle, end_angle):
-        self.angle += self.angular_velocity
-
-        if self.angle >= end_angle or self.angle <= start_angle:
-            self.angular_velocity *= -1  # Reverse the angular velocity if the circle reaches the end of the arc
-
-        arc_center_x = self.screen.get_width() // 2
-        arc_center_y = self.screen.get_height() // 2
-        self.x = int(self.radius * np.cos(self.angle) + arc_center_x)
-        self.y = int(self.radius * np.sin(self.angle) + arc_center_y)
+    def update(self):
+        self.angle += self.angular_speed
+        self.x = self.center_x + int(self.move_radius * np.cos(self.angle))
+        self.y = self.center_y + int(self.move_radius * np.sin(self.angle))
+        # check if on the other side of the arc
+        if self.angle > np.pi or self.angle < 0:
+            self.angular_speed *= -1
