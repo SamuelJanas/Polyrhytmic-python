@@ -3,7 +3,7 @@ import numpy as np
 
 
 class NoteCircle:
-    def __init__(self, screen, color, center_x, center_y, radius, arc_radius, distance=np.pi, angular_speed=0.02):
+    def __init__(self, screen, color, center_x, center_y, radius, arc_radius, distance=np.pi, angular_speed=0.02, track_name=""):
         self.screen = screen
         self.center_x = center_x
         self.center_y = center_y
@@ -14,6 +14,9 @@ class NoteCircle:
         self.arc_radius = arc_radius
         self.x = center_x + int(self.arc_radius * np.cos(self.distance))
         self.y = center_y + int(self.arc_radius * np.sin(self.distance))
+        if track_name != "":
+            self.track = pygame.mixer.Sound(track_name)
+            self.track.set_volume(0.5)
 
     def draw(self):
         self.update()
@@ -35,5 +38,5 @@ class NoteCircle:
         
         if self.distance >= 2 * np.pi or self.distance <= np.pi:
             self.angular_speed *= -1
-
-        print(self.distance, self.angular_speed)
+            self.track.play()
+            self.track.fadeout(1000)
