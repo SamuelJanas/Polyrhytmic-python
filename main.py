@@ -17,7 +17,7 @@ LINE_OFFSET_BOTTOM = 0.8 * HEIGHT
 
 clock = pygame.time.Clock()
 
-number_of_notes = 11
+number_of_notes = 5
 circle_width = 6
 half_length= (WIDTH - 2 * LINE_OFFSET_SIDES) / 2
 circle_interval = (half_length)/(number_of_notes+1)
@@ -30,7 +30,7 @@ circles = []
 arcs = []
 
 for i in range(number_of_notes):
-    circles.append(NoteCircle.NoteCircle(screen, Color.RED, LINE_OFFSET_SIDES + circle_interval * (i+1), center_y, center_x, circle_width, angular_speed=0.05 + 0.001 * i))
+    circles.append(NoteCircle.NoteCircle(screen, Color.RED, LINE_OFFSET_SIDES + circle_interval * (i+1), center_y, center_x, circle_width, angular_speed=0.05 + 0.002 * i))
     arc_radius = circles[i].get_flight_arc_radius(center_x)
     arcs.append(FlightArc.FlightArc(screen, Color.WHITE, center_x, center_y, arc_radius, np.pi, 0))
 
