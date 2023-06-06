@@ -13,11 +13,11 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Polyrhythm")
 
 LINE_OFFSET_SIDES = 50
-LINE_OFFSET_BOTTOM = 0.8 * HEIGHT
+LINE_OFFSET_BOTTOM = 0.2 * HEIGHT
 
 clock = pygame.time.Clock()
 
-number_of_notes = 5
+number_of_notes = 1
 circle_width = 6
 half_length= (WIDTH - 2 * LINE_OFFSET_SIDES) / 2
 circle_interval = (half_length)/(number_of_notes+1)
@@ -30,9 +30,9 @@ circles = []
 arcs = []
 
 for i in range(number_of_notes):
-    circles.append(NoteCircle.NoteCircle(screen, Color.RED, LINE_OFFSET_SIDES + circle_interval * (i+1), center_y, center_x, circle_width, angular_speed=0.05 + 0.002 * i))
-    arc_radius = circles[i].get_flight_arc_radius(center_x)
-    arcs.append(FlightArc.FlightArc(screen, Color.WHITE, center_x, center_y, arc_radius, np.pi, 0))
+    arc_radius = (i+1) * circle_interval
+    circles.append(NoteCircle.NoteCircle(screen, Color.RED, center_x, center_y, circle_width, arc_radius, angular_speed=0.005))
+    arcs.append(FlightArc.FlightArc(screen, Color.WHITE, center_x, center_y, arc_radius, 0, np.pi))
 
 circle_arcs = arcs + circles
 
@@ -52,6 +52,6 @@ while running:
 
 
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(144)
 
 pygame.quit()

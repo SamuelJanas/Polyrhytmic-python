@@ -1,22 +1,19 @@
 import pygame
 import numpy as np
 
-# ...
 
 class NoteCircle:
-    def __init__(self, screen, color, x, y, center_x, radius, angle=0, angular_speed=0.02):
+    def __init__(self, screen, color, center_x, center_y, radius, arc_radius, distance=np.pi, angular_speed=0.02):
         self.screen = screen
         self.center_x = center_x
-        self.center_y = y
-        self.x = x
-        self.y = y
-        self.starting_x = x
-        self.starting_y = y
+        self.center_y = center_y
         self.radius = radius
         self.color = color
-        self.angle = angle
+        self.distance = distance
         self.angular_speed = angular_speed
-        self.move_radius = self.get_flight_arc_radius(center_x)
+        self.arc_radius = arc_radius
+        self.x = center_x + int(self.arc_radius * np.cos(self.distance))
+        self.y = center_y + int(self.arc_radius * np.sin(self.distance))
 
     def draw(self):
         self.update()
@@ -32,9 +29,11 @@ class NoteCircle:
         return abs(self.x - center_x)
 
     def update(self):
-        self.angle += self.angular_speed
-        self.x = self.center_x + int(self.move_radius * np.cos(self.angle))
-        self.y = self.center_y + int(self.move_radius * np.sin(self.angle))
-        # check if on the other side of the arc
-        if self.angle > np.pi or self.angle < 0:
+        self.distance += self.angular_speed
+        self.x = self.center_x + int(self.arc_radius * np.cos(self.distance))
+        self.y = self.center_y + int(self.arc_radius * np.sin(self.distance))
+        
+        if self.distance >= 2 * np.pi or self.distance <= np.pi:
             self.angular_speed *= -1
+
+        print(self.distance, self.angular_speed)
