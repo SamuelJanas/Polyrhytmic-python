@@ -3,6 +3,7 @@ import Color
 import NoteCircle
 import FlightArc
 import numpy as np
+import math
 
 
 pygame.init()
@@ -32,7 +33,7 @@ arcs = []
 for i in range(number_of_notes):
     arc_radius = (i+1) * circle_interval
     track = f"assets/{i+1}.wav"
-    circles.append(NoteCircle.NoteCircle(screen, Color.RED, center_x, center_y, circle_width, arc_radius, angular_speed=0.005 - 0.0001 * i, track_name=track))
+    circles.append(NoteCircle.NoteCircle(screen, Color.RED, center_x, center_y, circle_width, arc_radius, angular_speed=0.009 - 0.0002 * i, track_name=track))
     arcs.append(FlightArc.FlightArc(screen, Color.WHITE, center_x, center_y, arc_radius, 0, np.pi))
 
 circle_arcs = arcs + circles
