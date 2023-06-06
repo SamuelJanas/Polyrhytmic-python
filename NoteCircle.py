@@ -36,7 +36,14 @@ class NoteCircle:
         self.x = self.center_x + int(self.arc_radius * np.cos(self.distance))
         self.y = self.center_y + int(self.arc_radius * np.sin(self.distance))
         
-        if self.distance >= 2 * np.pi or self.distance <= np.pi:
+        if self.distance >= 2 * np.pi:
             self.angular_speed *= -1
+            self.distance = 2 * np.pi
+            self.track.play()
+            self.track.fadeout(1000)
+
+        if self.distance <= np.pi:
+            self.angular_speed *= -1
+            self.distance = np.pi
             self.track.play()
             self.track.fadeout(1000)
