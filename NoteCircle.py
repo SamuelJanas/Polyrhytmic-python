@@ -23,6 +23,9 @@ class NoteCircle(pygame.sprite.Sprite):
     def get_y(self):
         return self.y
     
+    def get_flight_arc_radius(self, center_x):
+        return abs(self.x - center_x)
+    
     
 
         

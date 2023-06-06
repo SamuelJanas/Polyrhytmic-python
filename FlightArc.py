@@ -1,5 +1,5 @@
 import pygame
-import colors
+import Color
 
 class FlightArc(pygame.sprite.Sprite):
     def __init__(self, screen, color, x, y, radius, start_angle, end_angle):
@@ -13,4 +13,4 @@ class FlightArc(pygame.sprite.Sprite):
         self.end_angle = end_angle
 
     def draw(self):
-        pygame.draw.arc(self.screen, self.color, (self.x, self.y, self.radius, self.radius), self.start_angle, self.end_angle, width=1)
+        pygame.draw.arc(self.screen, self.color, (self.x - self.radius, self.y - self.radius, self.radius * 2, self.radius * 2), self.start_angle, self.end_angle, width=1)
